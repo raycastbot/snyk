@@ -11,7 +11,7 @@ fi
 
 last_exit_code=0
 exit_code=$last_exit_code
-threshold="high"
+threshold="critical"
 
 starting_dir=$PWD
 for dir in "${paths[@]}" ; do
