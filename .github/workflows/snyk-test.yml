@@ -30,8 +30,9 @@ jobs:
       - name: Setup Snyk
         uses: snyk/actions/setup@master
       - name: Snyk Test
+        working-directory: .github/workflows/
         run: |
-          ${{ github.action_path }}/snyk_test.sh "${{ inputs.paths }}"
+          ./snyk_test.sh "${{ inputs.paths }}"
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           PATHS: ${{ steps.get_changed_extensions.outputs.paths }}
