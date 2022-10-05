@@ -32,7 +32,7 @@ jobs:
       - name: Snyk Test
         working-directory: .github/workflows
         run: |
-          ./snyk-test.sh "${{ inputs.paths }}"
+          ./snyk-test.sh "${{ env.PATHS }}"
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           PATHS: ${{ steps.get_changed_extensions.outputs.paths }}
