@@ -11,6 +11,7 @@ fi
 
 last_exit_code=0
 exit_code=$last_exit_code
+threshold="high"
 
 starting_dir=$PWD
 for dir in "${paths[@]}" ; do
@@ -19,12 +20,12 @@ for dir in "${paths[@]}" ; do
     cd "$dir"
 
     set +e
-    snyk test --severity-threshold=high
+    snyk test --severity-threshold=$threshold
     last_exit_code=${?}
     set -e
 
     if [ $last_exit_code -ne 0 ]; then
-        echo "::error::Snyk found high vurnabilities in $extension_folder"
+        echo "::error::Snyk found $threshold vurnabilities in $extension_folder"
     fi
     if [ $exit_code -eq 0 ]; then
         exit_code=$last_exit_code
