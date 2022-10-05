@@ -9,6 +9,9 @@ else
     declare -a 'paths=('"$1"')'
 fi
 
+last_exit_code=0
+exit_code=$last_exit_code
+
 starting_dir=$PWD
 for dir in "${paths[@]}" ; do
     extension_folder=`basename $dir`
@@ -21,10 +24,13 @@ for dir in "${paths[@]}" ; do
     set -e
 
     if [ $last_exit_code -ne 0 ]; then
-        echo "::error::Snyk found vurnabilities in $extension_folder"
-        npm ci
-        exit 1
+        echo "::error::Snyk found high vurnabilities in $extension_folder"
+    fi
+    if [ $exit_code -eq 0 ]; then
+        exit_code=$last_exit_code
     fi
 
     cd $starting_dir
 done
+
+exit $exit_code
